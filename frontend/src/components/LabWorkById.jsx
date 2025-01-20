@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Table } from './Table';
 
 const LabWorkById = () => {
     const [labWorkId, setLabWorkId] = useState('');
@@ -12,11 +13,11 @@ const LabWorkById = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        // Имитация запроса с фиктивными данными
+        // Mock data for lab works
         const mockLabWorks = [
-            { id: '1', name: 'Lab Work 1', description: 'Description 1', difficulty: 'Easy', discipline: 'Math', coordinates: { x: 20, y: 30 } },
-            { id: '2', name: 'Lab Work 2', description: 'Description 2', difficulty: 'Medium', discipline: 'Science', coordinates: { x: 30, y: 40 } },
-            { id: '3', name: 'Lab Work 3', description: 'Description 3', difficulty: 'Hard', discipline: 'History', coordinates: { x: 25, y: 35 } },
+            { id: '1', name: 'Lab Work 1', description: 'Description 1', difficulty: 'Easy', discipline: 'Math', coordinates: '20, 30' },
+            { id: '2', name: 'Lab Work 2', description: 'Description 2', difficulty: 'Medium', discipline: 'Science', coordinates: '30, 40' },
+            { id: '3', name: 'Lab Work 3', description: 'Description 3', difficulty: 'Hard', discipline: 'History', coordinates: '25, 35' },
         ];
 
         const foundLabWork = mockLabWorks.find(lab => lab.id === labWorkId);
@@ -32,13 +33,14 @@ const LabWorkById = () => {
 
     return (
         <div>
+            <h2>Поиск лабораторной работы по ID</h2>
             <form onSubmit={handleSubmit}>
                 <label htmlFor="labWorkId">Введите ID лабораторной работы: </label>
                 <input
                     type="text"
                     id="labWorkId"
                     value={labWorkId}
-                    placeholder={`Введите ID`}
+                    placeholder="Введите ID"
                     onChange={handleInputChange}
                     required
                 />
@@ -47,17 +49,7 @@ const LabWorkById = () => {
 
             {error && <p style={{ color: 'red' }}>{error}</p>}
 
-            {labWorkData && (
-                <div>
-                    <h3>Lab Work Details</h3>
-                    <p><strong>ID:</strong> {labWorkData.id}</p>
-                    <p><strong>Name:</strong> {labWorkData.name}</p>
-                    <p><strong>Description:</strong> {labWorkData.description}</p>
-                    <p><strong>Difficulty:</strong> {labWorkData.difficulty}</p>
-                    <p><strong>Discipline:</strong> {labWorkData.discipline}</p>
-                    <p><strong>Coordinates:</strong> ({labWorkData.coordinates.x}, {labWorkData.coordinates.y})</p>
-                </div>
-            )}
+            {labWorkData && <Table labWorkData={labWorkData} />}
         </div>
     );
 };

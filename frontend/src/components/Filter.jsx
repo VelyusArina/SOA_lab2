@@ -5,7 +5,7 @@ const Filter = ({ selectedColumn, filter, setFilter, setSelectedColumn }) => {
         <div>
             {/* Выбор столбца для фильтрации */}
             <div>
-                <label>Select Column to Filter: </label>
+                <label>Выберете столбец для фильтрации: </label>
                 <select
                     value={selectedColumn}
                     onChange={(e) => setSelectedColumn(e.target.value)}

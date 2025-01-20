@@ -1,0 +1,20 @@
+
+button{
+    padding: 10px 15px;
+    background-color: #363737;
+    color: white;
+    font-size: 16px;
+    border-radius: 4px;
+}
+button:hover {
+    background-color: #121212;
+    border-color: #f8f4f4;
+}
+
+input{
+    padding: 10px;
+    borderRadius: 5px;
+    border: 1px solid #ccc;
+    fontSize: 14px;
+    width: 200px;
+}

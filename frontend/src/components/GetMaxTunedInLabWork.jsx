@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { Table } from './Table';
+
 
 const GetMaxTunedInLabWork = () => {
     const [mockLabWorks, setMockLabWorks] = useState([
@@ -18,19 +20,13 @@ const GetMaxTunedInLabWork = () => {
 
     return (
         <div>
-            <h2>Вернуть объект с максимальным значением tunedInWorks</h2>
-            <button onClick={getMaxTunedInLabWork}>Получить</button>
+            <h2>Лабораторные работы</h2>
+            <button onClick={getMaxTunedInLabWork}>Получить лабораторную работу с максимальным значением tunedInWorks</button>
 
             {maxTunedInLabWork && (
                 <div>
-                    <h3>Лабораторная работа с максимальным значением tunedInWorks:</h3>
-                    <p>ID: {maxTunedInLabWork.id}</p>
-                    <p>Название: {maxTunedInLabWork.name}</p>
-                    <p>Tuned In Works: {maxTunedInLabWork.tunedInWorks}</p>
-                    <p>Описание: {maxTunedInLabWork.description}</p>
-                    <p>Сложность: {maxTunedInLabWork.difficulty}</p>
-                    <p>Дисциплина: {maxTunedInLabWork.discipline}</p>
-                    <p>Координаты: {maxTunedInLabWork.coordinates}</p>
+                    <h2>Лабораторная работа с максимальным значением tunedInWorks</h2>
+                    <Table labWorkData={maxTunedInLabWork} />
                 </div>
             )}
         </div>

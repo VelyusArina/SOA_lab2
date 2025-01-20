@@ -1,11 +1,13 @@
 import React from 'react';
-import Table from "../components/Table";
+import TableModel from "../components/TableModel";
 import AddLabWork from "../components/AddLabWork";
 import LabWorkById from "../components/LabWorkById";
 import UpdateLabWork from "../components/UpdateLabWork";
 import DeleteLabWork from "../components/DeleteLabWork";
 import GetMaxTunedInLabWork from "../components/GetMaxTunedInLabWork";
 import GetLabWorksLessThanMinimal from "../components/GetLabWorksLessThanMinimal";
+import '../style/Button.css';
+
 
 class MainPage extends React.Component {
     constructor(props) {
@@ -39,7 +41,7 @@ class MainPage extends React.Component {
                     {isCRUDOpen && (
                         <div>
                             <h2>Получить элементы LabWork</h2>
-                            <Table></Table>
+                            <TableModel></TableModel>
                             <h2>Получить лабораторную работу по ID</h2>
                             <LabWorkById></LabWorkById>
                             <h2>Добавить новую лабораторную работу</h2>
@@ -59,7 +61,6 @@ class MainPage extends React.Component {
                     </div>
                     {isDOPOpen && (
                         <div>
-                            <h2>Дополнительные операции</h2>
                             <GetMaxTunedInLabWork></GetMaxTunedInLabWork>
                             <GetLabWorksLessThanMinimal></GetLabWorksLessThanMinimal>
                         </div>

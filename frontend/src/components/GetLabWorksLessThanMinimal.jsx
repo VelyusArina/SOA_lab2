@@ -45,9 +45,20 @@ const GetLabWorksLessThanMinimal = () => {
             {error && <p style={{ color: 'red' }}>{error}</p>}
             {count !== null && (
                 <div>
-                    <p>Количество лабораторных работ, где minimal меньше {minValue}: {count}</p>
+                    <p style={{
+                        fontSize: '18px',
+                        color: '#ffffff',
+                        fontWeight: 'bold',
+                        backgroundColor: 'rgb(18,31,69)',
+                        padding: '10px',
+                        borderRadius: '5px',
+                        maxWidth: '700px',
+                    }}>
+                        Количество лабораторных работ, где minimal меньше {minValue}: <span
+                            style={{color: '#399dff'}}>{count}</span>
+                        </p>
                 </div>
-            )}
+                )}
         </div>
     );
 };

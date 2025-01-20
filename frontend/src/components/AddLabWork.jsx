@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../style/AddLabWork.css'; // Подключаем файл с CSS
+import '../style/AddLabWork.css';
 
 const AddLabWork = ({ onAdd }) => {
     const [newLabWork, setNewLabWork] = useState({

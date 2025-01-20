@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 const DecreaseLabWorkDifficulty = () => {
     const [mockLabWorks, setMockLabWorks] = useState([
-        { id: '1', name: 'Lab Work 1', difficulty: 'HARD', description: 'Description 1', discipline: 'Math', coordinates: '20, 30' },
+        { id: '1', name: 'Lab Work 1', difficulty: 'TERRIBLE', description: 'Description 1', discipline: 'Math', coordinates: '20, 30' },
         { id: '2', name: 'Lab Work 2', difficulty: 'MEDIUM', description: 'Description 2', discipline: 'Science', coordinates: '30, 40' },
         { id: '3', name: 'Lab Work 3', difficulty: 'NORMAL', description: 'Description 3', discipline: 'History', coordinates: '25, 35' },
     ]);
@@ -51,7 +51,7 @@ const DecreaseLabWorkDifficulty = () => {
 
     return (
         <div>
-            <h2>Понизить сложность лабораторной работы</h2>
+            <h2>Понизить сложность заданной лабораторной работы на указанное число шагов</h2>
 
             {/* Ввод ID лабораторной работы */}
             <div>

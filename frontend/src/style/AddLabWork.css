@@ -1,16 +1,3 @@
-/* Стили для кнопки открытия модального окна */
-.open-modal-btn {
-    padding: 10px 15px;
-    background-color: #363737;
-    color: white;
-    font-size: 16px;
-    border-radius: 4px;
-}
-
-.open-modal-btn:hover {
-    background-color: #121212;
-    border-color: #f8f4f4;
-}
 
 /* Модальное окно */
 .modal-overlay {
