@@ -24,10 +24,10 @@ const Filter = ({ selectedColumn, filter, setFilter, setSelectedColumn }) => {
 
             {/* Поле ввода для фильтрации */}
             <div>
-                <label>Filter by {selectedColumn}: </label>
+                <label>Фильтр {selectedColumn}: </label>
                 <input
                     type="text"
-                    placeholder={`Filter by ${selectedColumn}`}
+                    placeholder={`Фильтр ${selectedColumn}`}
                     onChange={(e) => setFilter(e.target.value)}
                     value={filter}
                 />

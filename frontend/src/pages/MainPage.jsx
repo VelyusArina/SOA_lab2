@@ -1,33 +1,69 @@
 import React from 'react';
 import Table from "../components/Table";
 import AddLabWork from "../components/AddLabWork";
+import LabWorkById from "../components/LabWorkById";
+import UpdateLabWork from "../components/UpdateLabWork";
+import DeleteLabWork from "../components/DeleteLabWork";
+import GetMaxTunedInLabWork from "../components/GetMaxTunedInLabWork";
+import GetLabWorksLessThanMinimal from "../components/GetLabWorksLessThanMinimal";
 
+class MainPage extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            isCRUDOpen: true,
+            isDOPOpen: true
+        };
+    }
 
-class MainPage extends React.Component{
+    toggleCRUD = () => {
+        this.setState(prevState => ({ isCRUDOpen: !prevState.isCRUDOpen }));
+    };
+
+    toggleDOP = () => {
+        this.setState(prevState => ({ isDOPOpen: !prevState.isDOPOpen }));
+    };
+
     render() {
+        const { isCRUDOpen, isDOPOpen } = this.state;
+
         return (
             <div>
+                {/* CRUD Section */}
                 <div>
-                    <h1>CRUD</h1>
-                    <h2>Получить массив элементов LabWork</h2>
-                    <Table></Table>
-                    <h2>Получить лабораторную работу по ID</h2>
-
-                    <h2>Добавить новую лабораторную работу</h2>
-                    <AddLabWork onAdd={this.handleAddLabWork} />
-
-                    <h2>Обновить лабораторную работу</h2>
-
-                    <h2>Удалить лабораторную работу по ID</h2>
-
+                    <div onClick={this.toggleCRUD} style={{display: 'flex', alignItems: 'center', cursor: 'pointer'}}>
+                        <h1>CRUD</h1>
+                        <i className={`fas ${isCRUDOpen ? 'fa-chevron-down' : 'fa-chevron-right'}`}
+                           style={{marginLeft: '10px'}}></i>
+                    </div>
+                    {isCRUDOpen && (
+                        <div>
+                            <h2>Получить элементы LabWork</h2>
+                            <Table></Table>
+                            <h2>Получить лабораторную работу по ID</h2>
+                            <LabWorkById></LabWorkById>
+                            <h2>Добавить новую лабораторную работу</h2>
+                            <AddLabWork onAdd={this.handleAddLabWork}/>
+                            <UpdateLabWork></UpdateLabWork>
+                            <DeleteLabWork></DeleteLabWork>
+                        </div>
+                    )}
                 </div>
 
+                {/* DOP Section */}
                 <div>
-                    <h1>DOP</h1>
-                    <h2>Вернуть объект с максимальным значением tunedInWorks</h2>
-
-                    <h2>Вернуть количество объектов, где значение minimal меньше заданного</h2>
-
+                    <div onClick={this.toggleDOP} style={{display: 'flex', alignItems: 'center', cursor: 'pointer'}}>
+                        <h1>DOP</h1>
+                        <i className={`fas ${isDOPOpen ? 'fa-chevron-down' : 'fa-chevron-right'}`}
+                           style={{marginLeft: '10px'}}></i>
+                    </div>
+                    {isDOPOpen && (
+                        <div>
+                            <h2>Дополнительные операции</h2>
+                            <GetMaxTunedInLabWork></GetMaxTunedInLabWork>
+                            <GetLabWorksLessThanMinimal></GetLabWorksLessThanMinimal>
+                        </div>
+                    )}
                 </div>
             </div>
         );
