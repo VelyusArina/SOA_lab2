@@ -8,7 +8,6 @@ import GetMaxTunedInLabWork from "../components/GetMaxTunedInLabWork";
 import GetLabWorksLessThanMinimal from "../components/GetLabWorksLessThanMinimal";
 import '../style/Button.css';
 
-
 class MainPage extends React.Component {
     constructor(props) {
         super(props);
@@ -30,39 +29,34 @@ class MainPage extends React.Component {
         const { isCRUDOpen, isDOPOpen } = this.state;
 
         return (
-            <div>
+            <div className="main-container">
                 {/* CRUD Section */}
-                <div>
-                    <div onClick={this.toggleCRUD} style={{display: 'flex', alignItems: 'center', cursor: 'pointer'}}>
+                <div className="section">
+                    <div onClick={this.toggleCRUD} className="section-header">
                         <h1>CRUD</h1>
-                        <i className={`fas ${isCRUDOpen ? 'fa-chevron-down' : 'fa-chevron-right'}`}
-                           style={{marginLeft: '10px'}}></i>
+                        <i className={`fas ${isCRUDOpen ? 'fa-chevron-down' : 'fa-chevron-right'}`} />
                     </div>
                     {isCRUDOpen && (
-                        <div>
-                            <h2>Получить элементы LabWork</h2>
-                            <TableModel></TableModel>
-                            <h2>Получить лабораторную работу по ID</h2>
-                            <LabWorkById></LabWorkById>
-                            <h2>Добавить новую лабораторную работу</h2>
-                            <AddLabWork onAdd={this.handleAddLabWork}/>
-                            <UpdateLabWork></UpdateLabWork>
-                            <DeleteLabWork></DeleteLabWork>
+                        <div className="section-content">
+                            <TableModel />
+                            <LabWorkById />
+                            <AddLabWork onAdd={this.handleAddLabWork} />
+                            <UpdateLabWork />
+                            <DeleteLabWork />
                         </div>
                     )}
                 </div>
 
                 {/* DOP Section */}
-                <div>
-                    <div onClick={this.toggleDOP} style={{display: 'flex', alignItems: 'center', cursor: 'pointer'}}>
+                <div className="section">
+                    <div onClick={this.toggleDOP} className="section-header">
                         <h1>DOP</h1>
-                        <i className={`fas ${isDOPOpen ? 'fa-chevron-down' : 'fa-chevron-right'}`}
-                           style={{marginLeft: '10px'}}></i>
+                        <i className={`fas ${isDOPOpen ? 'fa-chevron-down' : 'fa-chevron-right'}`} />
                     </div>
                     {isDOPOpen && (
-                        <div>
-                            <GetMaxTunedInLabWork></GetMaxTunedInLabWork>
-                            <GetLabWorksLessThanMinimal></GetLabWorksLessThanMinimal>
+                        <div className="section-content">
+                            <GetMaxTunedInLabWork />
+                            <GetLabWorksLessThanMinimal />
                         </div>
                     )}
                 </div>

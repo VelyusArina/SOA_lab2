@@ -13,6 +13,48 @@ html, body {
   color: #ffffff;
   box-sizing: border-box;
 }
+.main-container {
+  padding: 20px;
+}
+
+.section {
+  margin-bottom: 20px;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+.section-header h1 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.section-header i {
+  margin-left: 10px;
+  font-size: 1.2rem;
+}
+
+.section-content {
+  margin-left: 20px;
+  padding-left: 20px;
+  border-left: 2px solid #ccc;
+}
+
+.section-content > div {
+  margin-bottom: 20px;
+  padding: 10px;
+  border: 1px solid rgba(221, 221, 221, 0.51); /* Линия на каждом блоке */
+  border-radius: 5px;
+}
+
+.section-content > div:last-child {
+  margin-bottom: 0;
+}
+
 
 
 

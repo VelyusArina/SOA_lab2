@@ -20,12 +20,11 @@ const GetMaxTunedInLabWork = () => {
 
     return (
         <div>
-            <h2>Лабораторные работы</h2>
-            <button onClick={getMaxTunedInLabWork}>Получить лабораторную работу с максимальным значением tunedInWorks</button>
+            <h2>Лабораторная работа с максимальным значением tunedInWorks</h2>
+            <button onClick={getMaxTunedInLabWork}>Получить</button>
 
             {maxTunedInLabWork && (
                 <div>
-                    <h2>Лабораторная работа с максимальным значением tunedInWorks</h2>
                     <Table labWorkData={maxTunedInLabWork} />
                 </div>
             )}

@@ -33,7 +33,7 @@ const LabWorkById = () => {
 
     return (
         <div>
-            <h2>Поиск лабораторной работы по ID</h2>
+            <h2>Получить лабораторную работу по ID</h2>
             <form onSubmit={handleSubmit}>
                 <label htmlFor="labWorkId">Введите ID лабораторной работы: </label>
                 <input

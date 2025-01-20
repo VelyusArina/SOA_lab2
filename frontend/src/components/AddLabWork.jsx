@@ -42,7 +42,9 @@ const AddLabWork = ({ onAdd }) => {
 
     return (
         <div>
-            <button onClick={() => setIsModalOpen(true)} className="open-modal-btn">Добавить новую лабораторную работу</button>
+            <h2>Добавить новую лабораторную работу</h2>
+            <button onClick={() => setIsModalOpen(true)} className="open-modal-btn">Добавить новую лабораторную работу
+            </button>
 
             {isModalOpen && (
                 <div className="modal-overlay">

@@ -67,6 +67,7 @@ const TableModel = () => {
 
     return (
         <div>
+            <h2>Получить элементы LabWork</h2>
             <Filter
                 selectedColumn={selectedColumn}
                 filter={filter}
@@ -80,7 +81,7 @@ const TableModel = () => {
                     min="1"
                     value={size}
                     onChange={handleSizeChange}
-                    style={{ width: '50px' }}
+                    style={{width: '50px'}}
                 />
             </div>
             <table>

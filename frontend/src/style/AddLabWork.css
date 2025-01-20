@@ -13,7 +13,7 @@
 }
 
 .modal-container {
-    background-color: #121212;
+    background-color:rgb(18,31,69);
     padding: 20px;
     border-radius: 8px;
     width: 500px;
@@ -55,7 +55,7 @@
 .form-group label {
     font-weight: bold;
     margin-bottom: 5px;
-    color: #555;
+    color: #e4e4e4;
     display: block;
 }
 
