@@ -1,0 +1,167 @@
+
+/* Контейнер для таблицы */
+.table-container {
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+
+/* Фильтры и сортировка */
+.filters {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.filters label {
+    font-size: 16px;
+    color: #333;
+}
+
+.filters select {
+    padding: 8px;
+    font-size: 14px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    color: #333;
+    width: 200px;
+}
+
+.filters select:hover {
+    border-color: #888;
+}
+
+/* Таблица */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+table th, table td {
+    padding: 15px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+table th {
+    background-color: #1f1f1f;
+    color: #fff;
+    font-weight: bold;
+}
+
+table tr:hover {
+    background-color: #333;
+}
+
+/* Пагинация */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.pagination button {
+    padding: 10px 15px;
+    font-size: 14px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    color: #333;
+    cursor: pointer;
+    margin: 0 5px;
+}
+
+.pagination button:disabled {
+    cursor: not-allowed;
+    background-color: #e0e0e0;
+    border-color: #bbb;
+}
+
+.pagination button:hover:not(:disabled) {
+    background-color: #e8e8e8;
+}
+
+/* Стили для активной ссылки */
+.active {
+    background-color: #1f1f1f;
+    color: #fff;
+    box-shadow: inset 0 0 5px rgba(255, 255, 255, 0.2);
+}
+
+select, input[type="text"] {
+    padding: 5px;
+    margin: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Стили для стрелок сортировки */
+.arrow {
+    margin-left: 5px;
+    font-size: 12px;
+}
+
+.arrow.asc::after {
+    content: "▲";
+    font-size: 12px;
+}
+
+.arrow.desc::after {
+    content: "▼";
+    font-size: 12px;
+}
+
+
+/* Стили для выбора столбца и фильтра */
+select, input[type="text"], input[type="number"] {
+    padding: 5px;
+    margin-left: 10px;
+    margin-right: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+input[type="text"] {
+    width: 200px;
+}
+
+/* Стили для пагинации */
+button {
+    padding: 5px 10px;
+    margin: 1px;
+    border: 1px solid #121212;
+    background-color: #555555;
+    cursor: pointer;
+    border-radius: 4px;
+    color: white;
+
+}
+
+button:disabled {
+    cursor: not-allowed;
+    color: #373737;
+}
+
+button:hover {
+    background-color: #555555;
+}
+
+/* Стили для надписей */
+label {
+    font-weight: bold;
+}
+
+/* Стили для поля ввода количества элементов */
+input[type="number"] {
+    width: 60px;
+    text-align: center;
+}
+
+

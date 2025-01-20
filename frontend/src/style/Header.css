@@ -1,0 +1,30 @@
+header {
+    height: 70px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+header a {
+    height: 100%;
+    padding: 0;
+    text-align: center;
+    display: flex; /* Используем flex для центровки текста */
+    justify-content: center;
+    align-items: center;
+    background-color: #373737;
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 20px;
+    flex-grow: 1; /* Заставляем ссылку растягиваться на всю доступную ширину */
+}
+
+header a:hover {
+    background-color: #2b2b2b;
+}
+
+header a.active {
+    background-color: #121212;
+}

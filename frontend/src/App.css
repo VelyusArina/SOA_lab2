@@ -1,0 +1,23 @@
+html, body {
+  height: 100%; /* Обеспечиваем, чтобы html и body растягивались на всю высоту */
+  margin: 0;
+}
+
+.App {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;  /* Контент выравнивается по верхнему краю */
+  min-height: 100vh; /* Обеспечиваем, чтобы .App занимала как минимум всю высоту экрана */
+  width: 100%; /* Растягиваем на всю ширину */
+  background-color: #121212;
+  color: #ffffff;
+  box-sizing: border-box;
+}
+
+h1 {
+  text-align: center;
+  color: #e4e4e4;
+  margin-bottom: 30px;
+}
+
+

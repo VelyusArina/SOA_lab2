@@ -1,0 +1,114 @@
+/* Стили для кнопки открытия модального окна */
+.open-modal-btn {
+    padding: 10px 15px;
+    background-color: #363737;
+    color: white;
+    font-size: 16px;
+    border-radius: 4px;
+}
+
+.open-modal-btn:hover {
+    background-color: #121212;
+    border-color: #f8f4f4;
+}
+
+/* Модальное окно */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-container {
+    background-color: #121212;
+    padding: 20px;
+    border-radius: 8px;
+    width: 500px;
+    max-width: 100%;
+    position: relative;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Кнопка закрытия модального окна */
+.close-modal-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: transparent;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.close-modal-btn:hover {
+    color: red;
+}
+
+.form-title {
+    text-align: center;
+    font-size: 24px;
+    color: #ffffff;
+}
+
+.labwork-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group {
+    margin-bottom: 5px;
+}
+
+.form-group label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #555;
+    display: block;
+}
+
+.form-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    box-sizing: border-box;
+    margin-top: 5px;
+}
+
+.form-input:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+.form-checkbox {
+    transform: scale(1.2);
+    margin-left: 10px;
+}
+
+.submit-btn {
+    padding: 12px 20px;
+    background-color: #363737;
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    align-self: center;
+    margin-top: 20px;
+}
+
+.submit-btn:hover {
+    background-color: #0056b3;
+}
+
+.submit-btn:active {
+    background-color: #004085;
+}
