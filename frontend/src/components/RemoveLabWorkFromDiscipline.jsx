@@ -24,7 +24,7 @@ const RemoveLabWorkFromDiscipline = () => {
                 return;
             }
 
-            const response = await axios.delete(`${config.API_BASE_URL}/bars/discipline/${disciplineId}/labwork/${labWorkId}/remove`, {
+            const response = await axios.delete(`${config.API_BASE_URL_SECOND}/bars/discipline/${disciplineId}/labwork/${labWorkId}/remove`, {
                 headers: {
                     'Content-Type': 'application/xml',
                 },

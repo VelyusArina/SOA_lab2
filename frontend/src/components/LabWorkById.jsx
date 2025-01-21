@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { Table } from './Table';
 import config from '../components/config';
-import xml2js from 'xml2js';
 
 const LabWorkById = () => {
     const [labWorkId, setLabWorkId] = useState('');
@@ -11,6 +10,35 @@ const LabWorkById = () => {
 
     const handleInputChange = (e) => {
         setLabWorkId(e.target.value);
+    };
+
+    const parseXML = (xmlString) => {
+        const parser = new DOMParser();
+        const xmlDoc = parser.parseFromString(xmlString, 'application/xml');
+        const labWork = {};
+
+        // Парсинг данных из XML
+        labWork.id = xmlDoc.getElementsByTagName('id')[0]?.textContent || '';
+        labWork.name = xmlDoc.getElementsByTagName('name')[0]?.textContent || '';
+        labWork.creationDate = xmlDoc.getElementsByTagName('creationDate')[0]?.textContent || '';
+        labWork.minimalPoint = xmlDoc.getElementsByTagName('minimalPoint')[0]?.textContent || '';
+        labWork.description = xmlDoc.getElementsByTagName('description')[0]?.textContent || '';
+        labWork.tunedInWorks = xmlDoc.getElementsByTagName('tunedInWorks')[0]?.textContent === 'true';
+        labWork.difficulty = xmlDoc.getElementsByTagName('difficulty')[0]?.textContent || '';
+
+        const coordinates = xmlDoc.getElementsByTagName('coordinates')[0];
+        labWork.coordinates = {
+            x: coordinates?.getElementsByTagName('x')[0]?.textContent || '',
+            y: coordinates?.getElementsByTagName('y')[0]?.textContent || '',
+        };
+
+        const discipline = xmlDoc.getElementsByTagName('discipline')[0];
+        labWork.discipline = {
+            name: discipline?.getElementsByTagName('name')[0]?.textContent || '',
+            labsCount: discipline?.getElementsByTagName('labsCount')[0]?.textContent || '',
+        };
+
+        return labWork;
     };
 
     const handleSubmit = async (e) => {
@@ -28,14 +56,8 @@ const LabWorkById = () => {
                 headers: { 'Content-Type': 'application/xml' },
             });
 
-            xml2js.parseString(response.data, (err, result) => {
-                if (err) {
-                    setError('Ошибка при парсинге XML');
-                } else {
-                    setLabWorkData(result.LabWork);
-                    setError(null);
-                }
-            });
+            const labWork = parseXML(response.data);
+            setLabWorkData(labWork);
         } catch (err) {
             setLabWorkData(null);
             if (err.response) {

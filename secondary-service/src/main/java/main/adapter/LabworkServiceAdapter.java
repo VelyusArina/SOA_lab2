@@ -44,7 +44,7 @@ public class LabworkServiceAdapter {
                 }
 
                 if (response.statusCode() == HttpStatus.NOT_FOUND.value()) {
-                    throw new AppRuntimeException(HttpStatus.NOT_FOUND, String.format("Нет города с таким ID: %s", id));
+                    throw new AppRuntimeException(HttpStatus.NOT_FOUND, String.format("Нет лабораторной с таким ID: %s", id));
                 }
 
                 throw new AppRuntimeException(HttpStatus.INTERNAL_SERVER_ERROR, "Не обработан статус ответа от основного сервера");

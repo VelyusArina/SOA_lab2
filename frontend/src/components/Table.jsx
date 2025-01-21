@@ -16,15 +16,15 @@ export const Table = ({ labWorkData }) => (
             </thead>
             <tbody>
             <tr>
-                <td>{labWorkData.id[0]}</td>
-                <td>{labWorkData.name[0]}</td>
-                <td>{`X: ${labWorkData.coordinates[0].x[0]}, Y: ${labWorkData.coordinates[0].y[0]}`}</td>
-                <td>{labWorkData.creationDate[0]}</td>
-                <td>{labWorkData.minimalPoint[0]}</td>
-                <td>{labWorkData.description[0]}</td>
-                <td>{labWorkData.tunedInWorks[0]}</td>
-                <td>{labWorkData.difficulty[0]}</td>
-                <td>{labWorkData.discipline[0].name[0]}</td>
+                <td>{labWorkData.id}</td>
+                <td>{labWorkData.name}</td>
+                <td>{`X: ${labWorkData.coordinates.x}, Y: ${labWorkData.coordinates.y}`}</td>
+                <td>{labWorkData.creationDate}</td>
+                <td>{labWorkData.minimalPoint}</td>
+                <td>{labWorkData.description}</td>
+                <td>{labWorkData.tunedInWorks}</td>
+                <td>{labWorkData.difficulty}</td>
+                <td>{labWorkData.discipline.name}</td>
             </tr>
             </tbody>
         </table>

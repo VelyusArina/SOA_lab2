@@ -24,7 +24,7 @@ const DecreaseLabWorkDifficulty = () => {
         setFormError('');
 
         try {
-            const response = await fetch(`${config.API_BASE_URL}/bars/labwork/${labWorkId}/difficulty/decrease/${steps}`, {
+            const response = await fetch(`${config.API_BASE_URL_SECOND}/bars/labwork/${labWorkId}/difficulty/decrease/${steps}`, {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/xml',

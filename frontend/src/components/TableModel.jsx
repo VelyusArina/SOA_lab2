@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { js2xml } from 'xml-js';
 import Filter from './Filter';
 import Sort from './Sort';
 import Pagination from './Pagination';

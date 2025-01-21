@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { js2xml, xml2js } from 'xml-js';
+import { xml2js } from 'xml-js';
 import config from '../components/config';
 
 const UpdateLabWork = () => {
@@ -94,11 +94,29 @@ const UpdateLabWork = () => {
     const handleUpdateSubmit = async (e) => {
         e.preventDefault();
 
-        // Преобразуем обновленные данные в XML
-        const xmlData = js2xml(
-            { LabWork: updatedData }, // Корневой элемент
-            { compact: true, ignoreComment: true, spaces: 4 }
-        );
+        // Преобразуем обновленные данные в XML вручную
+        const generateXML = (data) => {
+            return `
+            <LabWork>
+                <name>${data.name}</name>
+                <description>${data.description}</description>
+                <difficulty>${data.difficulty}</difficulty>
+                <discipline>
+                    <name>${data.discipline}</name>
+                    <labsCount>${data.labsCount}</labsCount>
+                </discipline>
+                <coordinates>
+                    <x>${data.coordinates.split(',')[0].trim()}</x>
+                    <y>${data.coordinates.split(',')[1].trim()}</y>
+                </coordinates>
+                <tunedInWorks>${data.tunedInWorks ? '1' : '0'}</tunedInWorks>
+                <creationDate>${data.creationDate}</creationDate>
+                <minimalPoint>${data.minimalPoint}</minimalPoint>
+            </LabWork>
+        `;
+        };
+
+        const xmlData = generateXML(updatedData);
 
         try {
             const response = await axios.put(`${config.API_BASE_URL}/labworks/${labWorkId}`, xmlData, {
@@ -123,6 +141,7 @@ const UpdateLabWork = () => {
             }
         }
     };
+
 
     return (
         <div>

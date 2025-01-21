@@ -11,6 +11,7 @@ const GetMaxTunedInLabWork = () => {
             const response = await fetch(`${config.API_BASE_URL}/labworks/max-tuned-in`, {
                 method: 'GET',
                 headers: {
+                    'Content-Type': 'application/xml',
                     'Accept': 'application/xml',
                 },
             });
