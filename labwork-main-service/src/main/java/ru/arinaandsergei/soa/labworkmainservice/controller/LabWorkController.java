@@ -15,6 +15,7 @@ import ru.arinaandsergei.soa.labworkmainservice.service.LabWorkService;
 
 import java.util.List;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/labworks")
 public class LabWorkController {
@@ -25,7 +26,7 @@ public class LabWorkController {
         this.labWorkService = labWorkService;
     }
 
-    @PostMapping
+    @PostMapping(consumes = MediaType.APPLICATION_XML_VALUE, produces = MediaType.APPLICATION_XML_VALUE)
     public ResponseEntity<LabWork> addLabWork(@RequestBody LabworkDTO dto) {
         LabWork createdLabWork = labWorkService.addLabWork(dto);
         return new ResponseEntity<>(createdLabWork, HttpStatus.CREATED);
@@ -37,13 +38,13 @@ public class LabWorkController {
         return ResponseEntity.ok(labWorks);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping(value = "/{id}", consumes = MediaType.APPLICATION_XML_VALUE, produces = MediaType.APPLICATION_XML_VALUE)
     public ResponseEntity<LabWork> getLabWorkById(@PathVariable Integer id) {
         LabWork labWork = labWorkService.getLabWorkById(id);
         return ResponseEntity.ok(labWork);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_XML_VALUE, produces = MediaType.APPLICATION_XML_VALUE)
     public ResponseEntity<LabWork> updateLabWork(
             @PathVariable("id") Integer id,
             @RequestBody @Valid LabWork updatedLabWork) {
@@ -59,7 +60,7 @@ public class LabWorkController {
         }
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping(value = "/{id}", consumes = MediaType.APPLICATION_XML_VALUE, produces = MediaType.APPLICATION_XML_VALUE)
     public ResponseEntity<String> deleteLabWork(@PathVariable("id") Integer id) {
         try {
             labWorkService.deleteLabWorkById(id);

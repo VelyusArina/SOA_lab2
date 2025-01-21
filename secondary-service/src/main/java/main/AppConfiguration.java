@@ -9,6 +9,6 @@ import org.springframework.context.annotation.Configuration;
 @Getter
 @Setter
 public class AppConfiguration {
-    @Value("${cities.endpoint}")
+    @Value("${base.endpoint}")
     public String baseEndpoint;
 }

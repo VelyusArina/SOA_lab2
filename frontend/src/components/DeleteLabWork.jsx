@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { js2xml } from 'xml-js';
 import config from '../components/config';
 
 const DeleteLabWork = () => {
@@ -23,15 +22,12 @@ const DeleteLabWork = () => {
 
         setFormError('');
 
-        const xmlData = js2xml(
-            { LabWork: { id: labWorkId } },
-            { compact: true, ignoreComment: true, spaces: 4 }
-        );
+        // Создание строки XML вручную
+        const xmlData = `<LabWork><id>${labWorkId}</id></LabWork>`;
 
         try {
-            const response = await axios.delete(`${config.API_BASE_URL}/labworks`, {
+            const response = await axios.delete(`${config.API_BASE_URL}/labworks/${labWorkId}`, {
                 headers: { 'Content-Type': 'application/xml' },
-                data: xmlData
             });
 
             if (response.status === 200) {

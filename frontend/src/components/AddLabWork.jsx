@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { js2xml } from 'xml-js';
 import config from '../components/config';
 
 const AddLabWork = ({ onAdd }) => {
@@ -47,15 +46,25 @@ const AddLabWork = ({ onAdd }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const xmlData = js2xml(
-            { LabWork: {
-                    ...newLabWork,
-                    coordinates: { x: newLabWork.coordinates.x, y: newLabWork.coordinates.y },
-                    discipline: { name: newLabWork.discipline.name, labsCount: newLabWork.discipline.labsCount },
-                    creationDate: newLabWork.creationDate,
-                }},
-            { compact: true, ignoreComment: true, spaces: 4 }
-        );
+        // Создание XML вручную
+        const xmlData = `
+            <LabWork>
+                <name>${newLabWork.name}</name>
+                <coordinates>
+                    <x>${newLabWork.coordinates.x}</x>
+                    <y>${newLabWork.coordinates.y}</y>
+                </coordinates>
+                <creationDate>${newLabWork.creationDate}</creationDate>
+                <minimalPoint>${newLabWork.minimalPoint}</minimalPoint>
+                <description>${newLabWork.description}</description>
+                <tunedInWorks>${newLabWork.tunedInWorks}</tunedInWorks>
+                <difficulty>${newLabWork.difficulty}</difficulty>
+                <discipline>
+                    <name>${newLabWork.discipline.name}</name>
+                    <labsCount>${newLabWork.discipline.labsCount}</labsCount>
+                </discipline>
+            </LabWork>
+        `;
 
         try {
             const response = await axios.post(`${config.API_BASE_URL}/labworks`, xmlData, {
