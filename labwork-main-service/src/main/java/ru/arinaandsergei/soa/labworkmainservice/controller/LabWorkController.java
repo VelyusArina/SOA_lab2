@@ -4,11 +4,16 @@ package ru.arinaandsergei.soa.labworkmainservice.controller;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.arinaandsergei.soa.labworkmainservice.DTO.LabworkDTO;
+import ru.arinaandsergei.soa.labworkmainservice.DTO.SearchDTO;
 import ru.arinaandsergei.soa.labworkmainservice.model.LabWork;
 import ru.arinaandsergei.soa.labworkmainservice.service.LabWorkService;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/labworks")
@@ -21,9 +26,15 @@ public class LabWorkController {
     }
 
     @PostMapping
-    public ResponseEntity<LabWork> addLabWork(@RequestBody LabWork labWork) {
-        LabWork createdLabWork = labWorkService.addLabWork(labWork);
+    public ResponseEntity<LabWork> addLabWork(@RequestBody LabworkDTO dto) {
+        LabWork createdLabWork = labWorkService.addLabWork(dto);
         return new ResponseEntity<>(createdLabWork, HttpStatus.CREATED);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<LabWork>> getLabWorks(@PathVariable SearchDTO dto) {
+        List<LabWork> labWorks = labWorkService.searchLabWorks(dto);
+        return ResponseEntity.ok(labWorks);
     }
 
     @GetMapping("/{id}")

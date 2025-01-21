@@ -2,12 +2,16 @@ package ru.arinaandsergei.soa.labworkmainservice.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
+import lombok.Getter;
+
 import java.time.ZonedDateTime;
 
+@Getter
 @Entity
 @Table(name = "labwork")
 public class LabWork {
 
+    // Getters and Setters
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -44,73 +48,36 @@ public class LabWork {
         this.creationDate = ZonedDateTime.now();
     }
 
-    // Getters and Setters
-    public Integer getId() {
-        return id;
-    }
-
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public String getName() {
-        return name;
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
-    public Coordinates getCoordinates() {
-        return coordinates;
-    }
-
     public void setCoordinates(Coordinates coordinates) {
         this.coordinates = coordinates;
-    }
-
-    public ZonedDateTime getCreationDate() {
-        return creationDate;
     }
 
     public void setCreationDate(ZonedDateTime creationDate) {
         this.creationDate = creationDate;
     }
 
-    public double getMinimalPoint() {
-        return minimalPoint;
-    }
-
     public void setMinimalPoint(double minimalPoint) {
         this.minimalPoint = minimalPoint;
-    }
-
-    public String getDescription() {
-        return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
     }
 
-    public Long getTunedInWorks() {
-        return tunedInWorks;
-    }
-
     public void setTunedInWorks(Long tunedInWorks) {
         this.tunedInWorks = tunedInWorks;
     }
 
-    public Difficulty getDifficulty() {
-        return difficulty;
-    }
-
     public void setDifficulty(Difficulty difficulty) {
         this.difficulty = difficulty;
-    }
-
-    public Discipline getDiscipline() {
-        return discipline;
     }
 
     public void setDiscipline(Discipline discipline) {
