@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Table } from './Table';
-import config from '../config';
+import config from '../components/config';
 
 const GetMaxTunedInLabWork = () => {
     const [maxTunedInLabWork, setMaxTunedInLabWork] = useState(null);

@@ -1,6 +1,5 @@
 package ru.arinaandsergei.soa.labworkmainservice.controller;
 
-
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { js2xml, xml2js } from 'xml-js';
-import config from '../config';
+import config from '../components/config';
 
 const UpdateLabWork = () => {
     const [labWorkId, setLabWorkId] = useState('');

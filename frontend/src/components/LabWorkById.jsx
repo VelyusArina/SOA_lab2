@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Table } from './Table';
-import config from '../config';
+import config from '../components/config';
 import xml2js from 'xml2js';
 
 const LabWorkById = () => {

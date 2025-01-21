@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import config from './config';
+import config from '../components/config';
 
 const RemoveLabWorkFromDiscipline = () => {
     const [disciplineId, setDisciplineId] = useState('');

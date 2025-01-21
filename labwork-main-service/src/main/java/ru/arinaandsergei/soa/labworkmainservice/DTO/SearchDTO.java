@@ -5,8 +5,6 @@ import ru.arinaandsergei.soa.labworkmainservice.model.Coordinates;
 import ru.arinaandsergei.soa.labworkmainservice.model.Difficulty;
 import ru.arinaandsergei.soa.labworkmainservice.model.Discipline;
 
-
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter

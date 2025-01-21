@@ -4,7 +4,7 @@ import { js2xml } from 'xml-js';
 import Filter from './Filter';
 import Sort from './Sort';
 import Pagination from './Pagination';
-import config from '../config';
+import config from '../components/config';
 import '../style/Table.css';
 
 const TableModel = () => {

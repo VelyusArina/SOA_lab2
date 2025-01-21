@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { js2xml } from 'xml-js';
-import config from '../config';
+import config from '../components/config';
 
 const DeleteLabWork = () => {
     const [labWorkId, setLabWorkId] = useState('');
