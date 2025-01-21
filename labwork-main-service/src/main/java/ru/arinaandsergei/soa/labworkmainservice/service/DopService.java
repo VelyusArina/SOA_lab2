@@ -1,17 +1,10 @@
 package ru.arinaandsergei.soa.labworkmainservice.service;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.stereotype.Service;
-
 import ru.arinaandsergei.soa.labworkmainservice.DTO.GroupCountDTO;
-
 import ru.arinaandsergei.soa.labworkmainservice.model.LabWork;
 import ru.arinaandsergei.soa.labworkmainservice.repository.LabWorkRepository;
-
-
-
 import java.util.List;
 
 

@@ -1,7 +1,5 @@
 package ru.arinaandsergei.soa.labworkmainservice.controller;
 
-
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 
@@ -13,7 +11,6 @@ import ru.arinaandsergei.soa.labworkmainservice.model.LabWork;
 import ru.arinaandsergei.soa.labworkmainservice.service.DopService;
 
 import java.util.List;
-
 
 @RestController
 @RequestMapping("/api/labworks")

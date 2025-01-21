@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import { Table } from './Table';
+import config from '../config';
+import xml2js from 'xml2js';
 
 const LabWorkById = () => {
     const [labWorkId, setLabWorkId] = useState('');
@@ -10,24 +13,46 @@ const LabWorkById = () => {
         setLabWorkId(e.target.value);
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // Mock data for lab works
-        const mockLabWorks = [
-            { id: '1', name: 'Lab Work 1', description: 'Description 1', difficulty: 'Easy', discipline: 'Math', coordinates: '20, 30' },
-            { id: '2', name: 'Lab Work 2', description: 'Description 2', difficulty: 'Medium', discipline: 'Science', coordinates: '30, 40' },
-            { id: '3', name: 'Lab Work 3', description: 'Description 3', difficulty: 'Hard', discipline: 'History', coordinates: '25, 35' },
-        ];
+        if (!labWorkId) {
+            setError('Пожалуйста, введите ID лабораторной работы');
+            return;
+        }
 
-        const foundLabWork = mockLabWorks.find(lab => lab.id === labWorkId);
+        setError(null);
 
-        if (foundLabWork) {
-            setLabWorkData(foundLabWork);
-            setError(null);
-        } else {
+        try {
+            const response = await axios.get(`${config.API_BASE_URL}/labworks/${labWorkId}`, {
+                headers: { 'Content-Type': 'application/xml' },
+            });
+
+            xml2js.parseString(response.data, (err, result) => {
+                if (err) {
+                    setError('Ошибка при парсинге XML');
+                } else {
+                    setLabWorkData(result.LabWork);
+                    setError(null);
+                }
+            });
+        } catch (err) {
             setLabWorkData(null);
-            setError('Lab work not found');
+            if (err.response) {
+                if (err.response.status === 400) {
+                    setError('Неверный запрос (400)');
+                } else if (err.response.status === 404) {
+                    setError('Лабораторная работа не найдена (404)');
+                } else if (err.response.status === 500) {
+                    setError('Ошибка сервера (500)');
+                } else {
+                    setError('Неизвестная ошибка');
+                }
+            } else if (err.request) {
+                setError('Ошибка при отправке запроса');
+            } else {
+                setError('Неизвестная ошибка');
+            }
         }
     };
 

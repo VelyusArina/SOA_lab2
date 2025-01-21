@@ -1,31 +1,62 @@
 import React, { useState } from 'react';
+import axios from 'axios';
+import { js2xml } from 'xml-js';
+import config from '../config';
 
 const DeleteLabWork = () => {
     const [labWorkId, setLabWorkId] = useState('');
-    const [mockLabWorks, setMockLabWorks] = useState([
-        { id: '1', name: 'Lab Work 1', description: 'Description 1', difficulty: 'Easy', discipline: 'Math', coordinates: '20, 30' },
-        { id: '2', name: 'Lab Work 2', description: 'Description 2', difficulty: 'Medium', discipline: 'Science', coordinates: '30, 40' },
-        { id: '3', name: 'Lab Work 3', description: 'Description 3', difficulty: 'Hard', discipline: 'History', coordinates: '25, 35' },
-    ]);
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(null);
+    const [formError, setFormError] = useState('');
 
     const handleInputChange = (e) => {
         setLabWorkId(e.target.value);
     };
 
-    const handleDelete = (e) => {
+    const handleDelete = async (e) => {
         e.preventDefault();
 
-        const updatedLabWorks = mockLabWorks.filter(lab => lab.id !== labWorkId);
+        if (!labWorkId) {
+            setFormError('Пожалуйста, введите ID лабораторной работы');
+            return;
+        }
 
-        if (updatedLabWorks.length === mockLabWorks.length) {
-            setError('Лабораторная работа с таким ID не найдена');
-            setSuccess(null);
-        } else {
-            setMockLabWorks(updatedLabWorks);
-            setError(null);
-            setSuccess('Лабораторная работа успешно удалена');
+        setFormError('');
+
+        const xmlData = js2xml(
+            { LabWork: { id: labWorkId } },
+            { compact: true, ignoreComment: true, spaces: 4 }
+        );
+
+        try {
+            const response = await axios.delete(`${config.API_BASE_URL}/labworks`, {
+                headers: { 'Content-Type': 'application/xml' },
+                data: xmlData
+            });
+
+            if (response.status === 200) {
+                setError(null);
+                setSuccess('Лабораторная работа успешно удалена');
+            }
+        } catch (err) {
+            if (err.response) {
+                if (err.response.status === 400) {
+                    setError('Неверный запрос (400)');
+                } else if (err.response.status === 404) {
+                    setError('Лабораторная работа не найдена (404)');
+                } else if (err.response.status === 500) {
+                    setError('Ошибка сервера (500)');
+                } else {
+                    setError('Неизвестная ошибка');
+                }
+                setSuccess(null);
+            } else if (err.request) {
+                setError('Ошибка при отправке запроса');
+                setSuccess(null);
+            } else {
+                setError('Неизвестная ошибка');
+                setSuccess(null);
+            }
         }
     };
 
@@ -45,9 +76,9 @@ const DeleteLabWork = () => {
                 <button type="submit">Удалить лабораторную работу</button>
             </form>
 
+            {formError && <p style={{ color: 'red' }}>{formError}</p>}
             {error && <p style={{ color: 'red' }}>{error}</p>}
             {success && <p style={{ color: 'green' }}>{success}</p>}
-            
         </div>
     );
 };

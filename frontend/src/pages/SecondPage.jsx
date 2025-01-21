@@ -1,58 +1,68 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import DecreaseLabWorkDifficulty from "../components/DecreaseLabWorkDifficulty";
 import '../style/Button.css';
+import RemoveLabWorkFromDiscipline from "../components/RemoveLabWorkFromDiscipline";
 
 class SecondPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isServiceAvailable: true, // Флаг, указывающий на доступность сервиса
-            errorMessage: '' // Сообщение об ошибке
+            isServiceAvailable: true, // Флаг, доступность текущего сервиса
+            isFirstServerAvailable: true, // Флаг, доступность первого сервера
+            errorMessage: '',
         };
     }
 
     componentDidMount() {
-        this.checkServiceAvailability();
+        this.checkServersAvailability();
     }
 
-    checkServiceAvailability = () => {
-        // Здесь можно выполнить запрос к API или произвести проверку доступности сервиса
-        // Пример с таймаутом для имитации проверки:
-        setTimeout(() => {
-            const isServiceAvailable = false;
-            if (!isServiceAvailable) {
+    checkServersAvailability = async () => {
+        try {
+            await axios.get('/health');
+            this.setState({ isFirstServerAvailable: true });
+
+            // Если первый сервер доступен, проверяем доступность второго сервера
+            await axios.get('/current-server-health');
+            this.setState({ isServiceAvailable: true });
+        } catch (error) {
+            if (error.response && error.response.status === 500) {
+                // Если первый сервер недоступен
                 this.setState({
+                    isFirstServerAvailable: false,
                     isServiceAvailable: false,
-                    errorMessage: 'Сервис недоступен. Пожалуйста, попробуйте позже.'
+                    errorMessage: 'Первый сервер недоступен, второй сервер также недоступен.'
+                });
+            } else {
+                // Если второй сервер недоступен
+                this.setState({
+                    isFirstServerAvailable: true,
+                    isServiceAvailable: false,
+                    errorMessage: 'Текущий сервер недоступен. Пожалуйста, попробуйте позже.'
                 });
             }
-        }, 1000); // Имитация задержки проверки
+        }
     };
 
     render() {
-        const { isServiceAvailable, errorMessage } = this.state;
+        const { isServiceAvailable, isFirstServerAvailable, errorMessage } = this.state;
 
-        if (!isServiceAvailable) {
+        // Если первый сервер недоступен, то второй сервер тоже недоступен
+        if (!isFirstServerAvailable || !isServiceAvailable) {
             return (
                 <div className="error-container" style={{ textAlign: 'center', color: 'red' }}>
-                    <h2>{errorMessage}</h2>
+                    <h2>{errorMessage || 'Сервисы недоступны. Пожалуйста, попробуйте позже.'}</h2>
                 </div>
             );
         }
 
         return (
             <div className="main-container">
-                {/* Раздел с компонентом DecreaseLabWorkDifficulty */}
                 <div className="section">
                     <div className="section-content">
                         <DecreaseLabWorkDifficulty />
-                    </div>
-                </div>
-
-                {/* Раздел для удаления лабораторной работы */}
-                <div className="section">
-                    <div className="section-header">
-                        <h2>Удалить лабораторную работу из программы дисциплины</h2>
+                        <RemoveLabWorkFromDiscipline />
                     </div>
                 </div>
             </div>

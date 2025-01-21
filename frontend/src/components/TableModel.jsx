@@ -1,25 +1,49 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { js2xml } from 'xml-js';
 import Filter from './Filter';
 import Sort from './Sort';
 import Pagination from './Pagination';
+import config from '../config';
 import '../style/Table.css';
 
 const TableModel = () => {
-    const data = [
-        { id: 1, name: 'Item 1', coordinates: 20, data: '2024-01-01', minimalPoint: 5, description: 'Description 1', tunedInWorks: true, difficulty: 'Easy', discipline: 'Math' },
-        { id: 2, name: 'Item 2', coordinates: 30, data: '2024-01-02', minimalPoint: 10, description: 'Description 2', tunedInWorks: false, difficulty: 'Medium', discipline: 'Science' },
-        { id: 3, name: 'Item 3', coordinates: 25, data: '2024-01-03', minimalPoint: 7, description: 'Description 3', tunedInWorks: true, difficulty: 'Hard', discipline: 'History' },
-        { id: 4, name: 'Item 4', coordinates: 40, data: '2024-01-04', minimalPoint: 12, description: 'Description 4', tunedInWorks: true, difficulty: 'Easy', discipline: 'Literature' },
-        { id: 5, name: 'Item 5', coordinates: 15, data: '2024-01-05', minimalPoint: 3, description: 'Description 5', tunedInWorks: false, difficulty: 'Hard', discipline: 'Math' },
-        { id: 6, name: 'Item 6', coordinates: 22, data: '2024-01-06', minimalPoint: 9, description: 'Description 6', tunedInWorks: true, difficulty: 'Medium', discipline: 'Science' },
-    ];
-
+    const [data, setData] = useState([]);
     const [sortColumn, setSortColumn] = useState('id');
     const [sortDirection, setSortDirection] = useState('asc');
     const [selectedColumn, setSelectedColumn] = useState('id');
     const [filter, setFilter] = useState('');
     const [page, setPage] = useState(1);
     const [size, setSize] = useState(3);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get(`${config.API_BASE_URL}/labworks`, {
+                    headers: { 'Content-Type': 'application/xml' }
+                });
+                setData(response.data.LabWorks || []);
+            } catch (err) {
+                if (err.response) {
+                    if (err.response.status === 400) {
+                        setError('Неверный запрос (400)');
+                    } else if (err.response.status === 422) {
+                        setError('Невалидные данные (422)');
+                    } else if (err.response.status === 500) {
+                        setError('Ошибка сервера (500)');
+                    } else {
+                        setError('Неизвестная ошибка');
+                    }
+                } else if (err.request) {
+                    setError('Ошибка при отправке запроса');
+                } else {
+                    setError('Неизвестная ошибка');
+                }
+            }
+        };
+        fetchData();
+    }, []);
 
     const filteredData = filter
         ? data.filter(item =>
@@ -61,7 +85,7 @@ const TableModel = () => {
         const newSize = Number(e.target.value);
         if (newSize > 0 && Number.isInteger(newSize)) {
             setSize(newSize);
-            setPage(1); // сбрасываем на первую страницу при изменении размера
+            setPage(1);
         }
     };
 
@@ -81,9 +105,10 @@ const TableModel = () => {
                     min="1"
                     value={size}
                     onChange={handleSizeChange}
-                    style={{width: '50px'}}
+                    style={{ width: '50px' }}
                 />
             </div>
+            {error && <p style={{ color: 'red' }}>{error}</p>}
             <table>
                 <Sort
                     sortColumn={sortColumn}

@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 import TableModel from "../components/TableModel";
 import AddLabWork from "../components/AddLabWork";
 import LabWorkById from "../components/LabWorkById";
@@ -7,15 +8,32 @@ import DeleteLabWork from "../components/DeleteLabWork";
 import GetMaxTunedInLabWork from "../components/GetMaxTunedInLabWork";
 import GetLabWorksLessThanMinimal from "../components/GetLabWorksLessThanMinimal";
 import '../style/Button.css';
+import GroupLabWorksByDescription from "../components/GroupLabWorksByDescription";
 
 class MainPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             isCRUDOpen: true,
-            isDOPOpen: true
+            isDOPOpen: true,
+            serverStatus: null
         };
     }
+
+    componentDidMount() {
+        this.checkServerStatus();
+    }
+
+    checkServerStatus = async () => {
+        try {
+            const response = await axios.get('/health');
+            if (response.status === 200) {
+                this.setState({ serverStatus: 'Сервер запущен' });
+            }
+        } catch (error) {
+            this.setState({ serverStatus: 'Сервер недоступен' });
+        }
+    };
 
     toggleCRUD = () => {
         this.setState(prevState => ({ isCRUDOpen: !prevState.isCRUDOpen }));
@@ -26,10 +44,18 @@ class MainPage extends React.Component {
     };
 
     render() {
-        const { isCRUDOpen, isDOPOpen } = this.state;
+        const { isCRUDOpen, isDOPOpen, serverStatus } = this.state;
 
         return (
             <div className="main-container">
+                <div className="server-status">
+                    {serverStatus ? (
+                        <p>{serverStatus}</p>
+                    ) : (
+                        <p>Проверка состояния сервера...</p>
+                    )}
+                </div>
+
                 {/* CRUD Section */}
                 <div className="section">
                     <div onClick={this.toggleCRUD} className="section-header">
@@ -56,6 +82,7 @@ class MainPage extends React.Component {
                     {isDOPOpen && (
                         <div className="section-content">
                             <GetMaxTunedInLabWork />
+                            <GroupLabWorksByDescription />
                             <GetLabWorksLessThanMinimal />
                         </div>
                     )}

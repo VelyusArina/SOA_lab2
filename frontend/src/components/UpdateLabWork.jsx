@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import axios from 'axios';
+import { js2xml, xml2js } from 'xml-js';
+import config from '../config';
 
 const UpdateLabWork = () => {
     const [labWorkId, setLabWorkId] = useState('');
@@ -9,8 +12,13 @@ const UpdateLabWork = () => {
         difficulty: '',
         discipline: '',
         coordinates: '',
+        tunedInWorks: false,
+        labsCount: 0,
+        creationDate: '',
+        minimalPoint: 0,
     });
     const [error, setError] = useState(null);
+    const [formError, setFormError] = useState('');
 
     const handleInputChange = (e) => {
         setLabWorkId(e.target.value);
@@ -23,42 +31,97 @@ const UpdateLabWork = () => {
         });
     };
 
-    const handleSubmit = (e) => {
+    const handleCheckboxChange = (e) => {
+        setUpdatedData({
+            ...updatedData,
+            tunedInWorks: e.target.checked,
+        });
+    };
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // Имитация запроса с фиктивными данными
-        const mockLabWorks = [
-            { id: '1', name: 'Lab Work 1', description: 'Description 1', difficulty: 'EASY', discipline: 'Math', coordinates: '20, 30' },
-            { id: '2', name: 'Lab Work 2', description: 'Description 2', difficulty: 'MEDIUM', discipline: 'Science', coordinates: '30, 40' },
-            { id: '3', name: 'Lab Work 3', description: 'Description 3', difficulty: 'HARD', discipline: 'History', coordinates: '25, 35' },
-        ];
+        if (!labWorkId) {
+            setFormError('Пожалуйста, введите ID лабораторной работы');
+            return;
+        }
 
-        const foundLabWork = mockLabWorks.find(lab => lab.id === labWorkId);
+        setFormError('');
 
-        if (foundLabWork) {
-            setLabWorkData(foundLabWork);
-            setUpdatedData({
-                name: foundLabWork.name,
-                description: foundLabWork.description,
-                difficulty: foundLabWork.difficulty,
-                discipline: foundLabWork.discipline,
-                coordinates: foundLabWork.coordinates,
+        try {
+            const response = await axios.get(`${config.API_BASE_URL}/labworks/${labWorkId}`, {
+                headers: { 'Content-Type': 'application/xml' },
             });
-            setError(null);
-        } else {
-            setLabWorkData(null);
-            setError('Lab work not found');
+
+            // Парсим XML в объект с помощью xml2js
+            xml2js.parseString(response.data, (err, result) => {
+                if (err) {
+                    setError('Ошибка при парсинге XML');
+                } else {
+                    const labWork = result.LabWork;
+                    setLabWorkData(labWork);
+                    setUpdatedData({
+                        name: labWork.name[0],
+                        description: labWork.description[0],
+                        difficulty: labWork.difficulty[0],
+                        discipline: labWork.discipline[0].name[0],
+                        coordinates: `${labWork.coordinates[0].x[0]}, ${labWork.coordinates[0].y[0]}`,
+                        tunedInWorks: labWork.tunedInWorks[0] === '1',
+                        labsCount: labWork.discipline[0].labsCount[0],
+                        creationDate: labWork.creationDate[0],
+                        minimalPoint: labWork.minimalPoint[0],
+                    });
+                    setError(null);
+                }
+            });
+        } catch (err) {
+            if (err.response) {
+                if (err.response.status === 400) {
+                    setError('Неверный запрос (400)');
+                } else if (err.response.status === 404) {
+                    setError('Лабораторная работа не найдена (404)');
+                } else if (err.response.status === 500) {
+                    setError('Ошибка сервера (500)');
+                } else {
+                    setError('Неизвестная ошибка');
+                }
+            } else {
+                setError('Ошибка при подключении к серверу');
+            }
         }
     };
 
-    const handleUpdateSubmit = (e) => {
+    const handleUpdateSubmit = async (e) => {
         e.preventDefault();
 
-        // Имитация обновления лабораторной работы
-        console.log('Updated data:', updatedData);
-        setError(null);
+        // Преобразуем обновленные данные в XML
+        const xmlData = js2xml(
+            { LabWork: updatedData }, // Корневой элемент
+            { compact: true, ignoreComment: true, spaces: 4 }
+        );
 
-        // Здесь вы можете отправить обновленные данные на сервер или выполнить другой запрос.
+        try {
+            const response = await axios.put(`${config.API_BASE_URL}/labworks/${labWorkId}`, xmlData, {
+                headers: { 'Content-Type': 'application/xml' },
+            });
+
+            console.log('Лабораторная работа обновлена:', response.data);
+            setError(null);
+        } catch (err) {
+            if (err.response) {
+                if (err.response.status === 400) {
+                    setError('Неверный запрос (400)');
+                } else if (err.response.status === 404) {
+                    setError('Лабораторная работа не найдена (404)');
+                } else if (err.response.status === 500) {
+                    setError('Ошибка сервера (500)');
+                } else {
+                    setError('Неизвестная ошибка');
+                }
+            } else {
+                setError('Ошибка при подключении к серверу');
+            }
+        }
     };
 
     return (
@@ -77,6 +140,7 @@ const UpdateLabWork = () => {
                 <button type="submit">Найти лабораторную работу</button>
             </form>
 
+            {formError && <p style={{ color: 'red' }}>{formError}</p>}
             {error && <p style={{ color: 'red' }}>{error}</p>}
 
             {labWorkData && (
@@ -140,6 +204,49 @@ const UpdateLabWork = () => {
                                 id="coordinates"
                                 name="coordinates"
                                 value={updatedData.coordinates}
+                                onChange={handleUpdateChange}
+                                required
+                            />
+                        </div>
+                        <div>
+                            <label htmlFor="tunedInWorks">Включена в работы:</label>
+                            <input
+                                type="checkbox"
+                                id="tunedInWorks"
+                                name="tunedInWorks"
+                                checked={updatedData.tunedInWorks}
+                                onChange={handleCheckboxChange}
+                            />
+                        </div>
+                        <div>
+                            <label htmlFor="labsCount">Количество лабораторных работ в дисциплине:</label>
+                            <input
+                                type="number"
+                                id="labsCount"
+                                name="labsCount"
+                                value={updatedData.labsCount}
+                                onChange={handleUpdateChange}
+                                required
+                            />
+                        </div>
+                        <div>
+                            <label htmlFor="creationDate">Дата создания:</label>
+                            <input
+                                type="datetime-local"
+                                id="creationDate"
+                                name="creationDate"
+                                value={updatedData.creationDate}
+                                onChange={handleUpdateChange}
+                                required
+                            />
+                        </div>
+                        <div>
+                            <label htmlFor="minimalPoint">Минимальная оценка:</label>
+                            <input
+                                type="number"
+                                id="minimalPoint"
+                                name="minimalPoint"
+                                value={updatedData.minimalPoint}
                                 onChange={handleUpdateChange}
                                 required
                             />
