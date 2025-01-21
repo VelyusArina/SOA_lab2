@@ -148,9 +148,21 @@ public class LabWorkService {
 
         int fromIndex = searchDTO.getPage()*searchDTO.getSize();
         int toIndex = fromIndex + searchDTO.getSize();
-        List<LabWork> slicedList = labWorks.subList(fromIndex, toIndex);
 
-        return slicedList;
+        if(!labWorks.isEmpty()){
+            if(toIndex > labWorks.size()) {
+                toIndex = labWorks.size();
+            }
+            if(fromIndex > labWorks.size()) {
+                return new ArrayList<LabWork>();
+
+            }
+            List<LabWork> slicedList = labWorks.subList(fromIndex, toIndex);
+            return slicedList;
+        }
+        else{
+            return labWorks;
+        }
     }
 
 }

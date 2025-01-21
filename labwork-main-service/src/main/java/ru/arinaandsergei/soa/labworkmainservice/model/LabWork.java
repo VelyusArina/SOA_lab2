@@ -40,7 +40,7 @@ public class LabWork {
     private Difficulty difficulty;
 
     @NotNull(message = "Discipline cannot be null")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "discipline_id")
     private Discipline discipline;
 
